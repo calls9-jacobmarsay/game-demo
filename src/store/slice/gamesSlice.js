@@ -16,13 +16,13 @@ export const loadGames = createAsyncThunk('games/loadGames', async () => {
   
 
 
-export const loadDetail = createAsyncThunk(async (id) => {
-    const detailData = await axios.get(gameDetailsUrl(id));
-    const screenshotData = await axios.get(gameScreenshotUrl(id));
-    return {
-      game: detailData.data,
-      screen: screenshotData.data,
-    };
+export const loadDetail = createAsyncThunk("games/loadDetail", async (id) => {
+  const detailData = await axios.get(gameDetailsUrl(id));
+  const screenshotData = await axios.get(gameScreenshotUrl(id));
+  return {
+    game: detailData.data,
+    screen: screenshotData.data,
+  };
 });
 
 const initialState = {
@@ -35,7 +35,7 @@ const initialState = {
     status: 'idle',
     error: null,
   };
-    
+
   const gamesSlice = createSlice({
     name: 'games',
     initialState,
@@ -45,6 +45,18 @@ const initialState = {
         state.popular = action.payload.popular;
         state.upcoming = action.payload.upcoming;
         state.newGames = action.payload.newGames;
+      });
+      builder.addCase(loadDetail.pending, (state) => {
+        state.status = "loading";
+      });
+      builder.addCase(loadDetail.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.game = action.payload.game;
+        state.screen = action.payload.screen;
+      });
+      builder.addCase(loadDetail.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
       });
     },
   });
