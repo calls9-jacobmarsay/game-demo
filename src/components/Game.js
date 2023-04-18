@@ -15,11 +15,15 @@ const Game = ({ name, released, image, id }) => {
     console.log(stringPathId);
   };
   return (
-    <div layout layoutId={stringPathId} onClick={loadDetailHandler}>
+    <div className="game__card" layout layoutId={stringPathId} onClick={loadDetailHandler}>
       <Link to={`/game/${id}`}>
-        <h3>{name}</h3>
-        <p>{released}</p>
-        <img src={smallImage(image, 640)} alt={name} />
+        <div className="card__image">
+          <img src={smallImage(image, 640)} alt={name} />
+        </div>
+        <div className="card__content">
+          <h3>{name}</h3>
+          <p>{released}</p>
+        </div>
       </Link>
     </div>
   );
