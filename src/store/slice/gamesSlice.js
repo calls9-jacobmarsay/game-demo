@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { popularGamesUrl, upcomingGamesUrl, newgamesUrl, gameDetailsUrl, gameScreenshotUrl} from '../../api/api';
+import { popularGamesUrl, upcomingGamesUrl, newgamesUrl, gameDetailsUrl, gameScreenshotUrl, gameSearchtUrl} from '../../api/api';
 import axios from 'axios';
 
 export const loadGames = createAsyncThunk('games/loadGames', async () => {
@@ -13,8 +13,6 @@ export const loadGames = createAsyncThunk('games/loadGames', async () => {
     newGames: newGameData.data.results,
   };
 });
-  
-
 
 export const loadDetail = createAsyncThunk("games/loadDetail", async (id) => {
   const detailData = await axios.get(gameDetailsUrl(id));
@@ -22,6 +20,13 @@ export const loadDetail = createAsyncThunk("games/loadDetail", async (id) => {
   return {
     game: detailData.data,
     screen: screenshotData.data,
+  };
+});
+
+export const fetchSearch = createAsyncThunk("games/fetchSearch", async (game_name)=>{
+  const searchedGames = await axios.get(gameSearchtUrl(game_name));
+  return {
+    searched: searchedGames.data.results,
   };
 });
 
@@ -58,6 +63,10 @@ const initialState = {
         state.status = "failed";
         state.error = action.error.message;
       });
+    builder.addCase(fetchSearch.fulfilled, (state, action) => {
+      state.searched = action.payload.searched;
+    });
+
     },
   });
   
