@@ -1,6 +1,9 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { smallImage } from "../util";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 import '../styles/app.scss'
 
 const GameDetail = ({ pathId }) => {
@@ -14,6 +17,9 @@ const GameDetail = ({ pathId }) => {
     	<div className="game__content">
       	<div className="content">
         		<div className="column">
+				  	<Link to="/">
+               	<FontAwesomeIcon icon={faCircleArrowLeft} size="2x"/>
+            	</Link>
            		<div className="flex__row">
                	<h2>{game.name}</h2>
                	<p>Rating: {game.rating}</p>

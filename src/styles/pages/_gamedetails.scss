@@ -6,6 +6,10 @@
       width: 100%;
       .column{
          width: 50%;
+			svg{
+				padding: 2rem 0rem 0rem 2rem;
+				color: $accent_colour;
+			}
       }
       .flex__row{
          @include flex(row, space-between, center);
